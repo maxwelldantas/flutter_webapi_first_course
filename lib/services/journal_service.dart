@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter_webapi_first_course/models/journal.dart';
 import 'package:flutter_webapi_first_course/services/logging_interceptor.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http_interceptor.dart';
@@ -14,8 +17,20 @@ class JournalService {
     return "$url$resource";
   }
 
-  register(String content) {
-    client.post(Uri.parse(getUrl()), body: content);
+  Future<bool> register(Journal journal) async {
+    String jsonJournal = json.encode(journal.toMap());
+
+    http.Response response = await client.post(
+      Uri.parse(getUrl()),
+      headers: {'Content-type': 'application/json'},
+      body: jsonJournal,
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
   }
 
   Future<String> get() async {

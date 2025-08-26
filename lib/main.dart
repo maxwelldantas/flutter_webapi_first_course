@@ -11,8 +11,8 @@ void main() {
   runApp(const MyApp());
 
   JournalService service = JournalService();
-  // service.register("{\"name\": \"John Doe\"}");
-  // service.get();
+  service.register(Journal.empty());
+  service.get();
 
   asyncStudy();
 }
