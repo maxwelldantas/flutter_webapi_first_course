@@ -4,7 +4,7 @@ import 'package:http_interceptor/http_interceptor.dart';
 
 class JournalService {
   static const String url = "http://172.22.144.1:3000/";
-  static const String resource = "learnhttp";
+  static const String resource = "journals/";
 
   http.Client client = InterceptedClient.build(
     interceptors: [LoggingInterceptor()],
