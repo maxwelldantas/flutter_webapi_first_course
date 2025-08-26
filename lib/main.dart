@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.black,
           titleTextStyle: TextStyle(color: Colors.white),
           actionsIconTheme: IconThemeData(color: Colors.white),
+          iconTheme: IconThemeData(color: Colors.white),
         ),
         textTheme: GoogleFonts.bitterTextTheme(),
       ),
@@ -39,15 +40,18 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       initialRoute: "home",
       routes: {
-        "home": (context) => const HomeScreen(),
-        "add-journal": (context) => AddJournalScreen(
-          journal: Journal(
-            id: "id",
-            content: "content",
-            createdAt: DateTime.now(),
-            updatedAt: DateTime.now(),
-          ),
-        ),
+        "home": (context) => const HomeScreen()
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == "add-journal") {
+          final Journal journal = settings.arguments as Journal;
+
+          return MaterialPageRoute(
+              builder: (context) {
+                return AddJournalScreen(journal: journal);
+              }
+          );
+        }
       },
     );
   }
