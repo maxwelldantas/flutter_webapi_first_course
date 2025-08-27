@@ -106,6 +106,7 @@ class JournalCard extends StatelessWidget {
         updatedAt: showedDate,
       ),
     ).then((onValue) {
+      refreshFunction();
       if (onValue != null && onValue == true) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Registro salvo com sucesso."))
