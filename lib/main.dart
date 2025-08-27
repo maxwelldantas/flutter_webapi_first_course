@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_webapi_first_course/helpers/async_study.dart';
 import 'package:flutter_webapi_first_course/models/journal.dart';
 import 'package:flutter_webapi_first_course/screens/add_journal_screen.dart';
 import 'package:flutter_webapi_first_course/services/journal_service.dart';
@@ -14,11 +13,11 @@ void main() {
   // service.register(Journal.empty());
   service.getAll();
 
-  asyncStudy();
+  // asyncStudy();
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key}) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +38,19 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.light,
       initialRoute: "home",
-      routes: {
-        "home": (context) => const HomeScreen()
-      },
+      routes: {"home": (context) => const HomeScreen()},
       onGenerateRoute: (settings) {
         if (settings.name == "add-journal") {
           final Journal journal = settings.arguments as Journal;
 
           return MaterialPageRoute(
-              builder: (context) {
-                return AddJournalScreen(journal: journal);
-              }
+            builder: (context) {
+              return AddJournalScreen(journal: journal);
+            },
           );
         }
+
+        return null;
       },
     );
   }

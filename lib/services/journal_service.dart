@@ -48,8 +48,6 @@ class JournalService {
       listJournals.add(Journal.fromMap(jsonMap));
     }
 
-    print("Tamanho da list de journals: ${listJournals.length.toString()}");
-
     return listJournals;
   }
 }

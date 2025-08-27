@@ -7,14 +7,14 @@ class AddJournalScreen extends StatelessWidget {
   final Journal journal;
   final TextEditingController _contentController = TextEditingController();
 
-  AddJournalScreen({Key? key, required this.journal}) : super(key: key);
+  AddJournalScreen({super.key, required this.journal}) : super();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "${WeekDay(journal.createdAt.weekday).long}, ${journal.createdAt.day}  |  ${journal.createdAt.month}  |  ${journal.createdAt.year}",
+          "${WeekDay(journal.createdAt)}",
         ),
         actions: [
           IconButton(
@@ -45,6 +45,8 @@ class AddJournalScreen extends StatelessWidget {
     JournalService service = JournalService();
     bool result = await service.register(journal);
 
-    Navigator.pop(context, result);
+    if (context.mounted) {
+      Navigator.pop(context, result);
+    }
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
 asyncStudy() {
   execucaoNormal();
   assincronismoBasico();
@@ -8,45 +10,45 @@ asyncStudy() {
 }
 
 void execucaoNormal() {
-  print("\nExecução Normal");
-  print("01");
-  print("02");
-  print("03");
-  print("04");
-  print("05");
+  debugPrint("\nExecução Normal");
+  debugPrint("01");
+  debugPrint("02");
+  debugPrint("03");
+  debugPrint("04");
+  debugPrint("05");
 }
 
 void assincronismoBasico() {
-  print("\nAssincronismo Básico");
-  print("01");
-  print("02");
+  debugPrint("\nAssincronismo Básico");
+  debugPrint("01");
+  debugPrint("02");
   Future.delayed(Duration(seconds: 2), () {
-    print("03");
+    debugPrint("03");
   });
-  print("04");
-  print("05");
+  debugPrint("04");
+  debugPrint("05");
 }
 
 void usandoFuncoesAssincronas() {
-  print("\nUsando funções assíncronas");
-  print("A");
-  print("B");
-  //print(getRandomInt(3)); // Instance of Future<int>
+  debugPrint("\nUsando funções assíncronas");
+  debugPrint("A");
+  debugPrint("B");
+  //debugPrint(getRandomInt(3)); // Instance of Future<int>
   getRandomInt(3).then((value) {
-    print("O número aleatório é $value.");
+    debugPrint("O número aleatório é $value.");
     // E se eu quiser que as coisas só aconteçam depois?
   });
-  print("C");
-  print("D");
+  debugPrint("C");
+  debugPrint("D");
 }
 
 void esperandoFuncoesAssincronas() async {
-  print("A");
-  print("B");
+  debugPrint("A");
+  debugPrint("B");
   int number = await getRandomInt(4);
-  print("O outro número aleatório é $number.");
-  print("C");
-  print("D");
+  debugPrint("O outro número aleatório é $number.");
+  debugPrint("C");
+  debugPrint("D");
 }
 
 Future<int> getRandomInt(int time) async {
