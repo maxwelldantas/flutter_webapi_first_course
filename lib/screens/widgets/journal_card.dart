@@ -112,9 +112,9 @@ class JournalCard extends StatelessWidget {
       innerJournal = journal;
     }
 
-    Navigator.pushNamed(
-      context,
-      'add-journal', arguments: innerJournal)).then((onValue) {
+    Navigator.pushNamed(context, 'add-journal', arguments: innerJournal).then((
+      onValue,
+    ) {
       refreshFunction();
       if (onValue != null && onValue == true) {
         ScaffoldMessenger.of(
