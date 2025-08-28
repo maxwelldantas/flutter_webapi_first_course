@@ -41,11 +41,15 @@ class MyApp extends StatelessWidget {
       routes: {"home": (context) => const HomeScreen()},
       onGenerateRoute: (settings) {
         if (settings.name == "add-journal") {
-          final Journal journal = settings.arguments as Journal;
+          Map<String, dynamic> mapArguments = settings.arguments as Map<
+              String,
+              dynamic>;
+          final Journal journal = mapArguments["journal"] as Journal;
+          final bool isEditing = mapArguments["is_editing"];
 
           return MaterialPageRoute(
             builder: (context) {
-              return AddJournalScreen(journal: journal);
+              return AddJournalScreen(journal: journal, isEditing: isEditing,);
             },
           );
         }
