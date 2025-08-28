@@ -8,15 +8,20 @@ class JournalCard extends StatelessWidget {
   final DateTime showedDate;
   final Function refreshFunction;
 
-  const JournalCard(
-      {super.key, this.journal, required this.showedDate, required this.refreshFunction})
-      : super();
+  const JournalCard({
+    super.key,
+    this.journal,
+    required this.showedDate,
+    required this.refreshFunction,
+  }) : super();
 
   @override
   Widget build(BuildContext context) {
     if (journal != null) {
       return InkWell(
-        onTap: () {},
+        onTap: () {
+          callAddJournalScreen(context, journal: journal);
+        },
         child: Container(
           height: 115,
           margin: const EdgeInsets.all(8),
@@ -95,26 +100,30 @@ class JournalCard extends StatelessWidget {
     }
   }
 
-  callAddJournalScreen(BuildContext context) {
+  callAddJournalScreen(BuildContext context, {Journal? journal}) {
+    Journal innerJournal = Journal(
+      id: const Uuid().v1(),
+      content: "",
+      createdAt: showedDate,
+      updatedAt: showedDate,
+    );
+
+    if (journal != null) {
+      innerJournal = journal;
+    }
+
     Navigator.pushNamed(
       context,
-      'add-journal',
-      arguments: Journal(
-        id: const Uuid().v1(),
-        content: "",
-        createdAt: showedDate,
-        updatedAt: showedDate,
-      ),
-    ).then((onValue) {
+      'add-journal', arguments: innerJournal)).then((onValue) {
       refreshFunction();
       if (onValue != null && onValue == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Registro salvo com sucesso."))
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Registro salvo com sucesso.")));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Houve falha ao registrar!"))
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Houve falha ao registrar!")));
       }
     });
   }
