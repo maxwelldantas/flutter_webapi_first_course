@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-Future<dynamic> showConfirmationDialog(
-  BuildContext context, {
-  String title = "Atenção!",
-  String content = "Deseja realizar essa operação?",
-  String affirmativeOption = "Confirmar",
-}) {
+Future<dynamic> showConfirmationDialog(BuildContext context,
+    {String title = "Atenção!",
+      String content = "Deseja realizar essa operação?",
+      String affirmativeOption = "Confirmar"}) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -17,7 +15,9 @@ Future<dynamic> showConfirmationDialog(
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: const Text("Cancelar"),
+            child: const Text(
+              "Cancelar",
+            ),
           ),
           TextButton(
             onPressed: () {
@@ -26,9 +26,7 @@ Future<dynamic> showConfirmationDialog(
             child: Text(
               affirmativeOption.toUpperCase(),
               style: const TextStyle(
-                color: Colors.brown,
-                fontWeight: FontWeight.bold,
-              ),
+                  color: Colors.brown, fontWeight: FontWeight.bold),
             ),
           ),
         ],

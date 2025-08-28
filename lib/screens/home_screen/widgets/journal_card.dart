@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_webapi_first_course/screens/commom/confirmation_dialog.dart';
-import 'package:flutter_webapi_first_course/services/journal_service.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../helpers/weekday.dart';
@@ -11,7 +9,6 @@ class JournalCard extends StatelessWidget {
   final Journal? journal;
   final DateTime showedDate;
   final Function refreshFunction;
-
   const JournalCard({
     Key? key,
     this.journal,
@@ -24,12 +21,16 @@ class JournalCard extends StatelessWidget {
     if (journal != null) {
       return InkWell(
         onTap: () {
-          callAddJournalScreen(context, journal: journal);
+          //TODO: Implementar edição da entrada
         },
         child: Container(
           height: 115,
           margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(border: Border.all(color: Colors.black87)),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.black87,
+            ),
+          ),
           child: Row(
             children: [
               Column(
@@ -41,18 +42,16 @@ class JournalCard extends StatelessWidget {
                     decoration: const BoxDecoration(
                       color: Colors.black54,
                       border: Border(
-                        right: BorderSide(color: Colors.black87),
-                        bottom: BorderSide(color: Colors.black87),
-                      ),
+                          right: BorderSide(color: Colors.black87),
+                          bottom: BorderSide(color: Colors.black87)),
                     ),
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       journal!.createdAt.day.toString(),
                       style: const TextStyle(
-                        fontSize: 32,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          fontSize: 32,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
@@ -60,7 +59,9 @@ class JournalCard extends StatelessWidget {
                     width: 75,
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(
-                      border: Border(right: BorderSide(color: Colors.black87)),
+                      border: Border(
+                        right: BorderSide(color: Colors.black87),
+                      ),
                     ),
                     padding: const EdgeInsets.all(8),
                     child: Text(WeekDay(journal!.createdAt).short),
@@ -81,12 +82,6 @@ class JournalCard extends StatelessWidget {
                     maxLines: 3,
                   ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  deleteJournal(context);
-                },
-                icon: const Icon(Icons.delete, color: Colors.grey),
               ),
             ],
           ),
@@ -110,65 +105,31 @@ class JournalCard extends StatelessWidget {
     }
   }
 
-  callAddJournalScreen(BuildContext context, {Journal? journal}) {
-    Journal internalJournal = Journal(
-      id: const Uuid().v1(),
-      content: "",
-      createdAt: showedDate,
-      updatedAt: showedDate,
-    );
-
-    if (journal != null) {
-      internalJournal = journal;
-    }
-
-    Map<String, dynamic> map = {
-      'journal': internalJournal,
-      'is_editing': journal != null,
-    };
-
-    Navigator.pushNamed(context, 'add-journal', arguments: map).then((value) {
+  callAddJournalScreen(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      'add-journal',
+      arguments: Journal(
+        id: const Uuid().v1(),
+        content: "",
+        createdAt: showedDate,
+        updatedAt: showedDate,
+      ),
+    ).then((value) {
       refreshFunction();
 
       if (value == DisposeStatus.success) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Registro salvo com sucesso.")),
+          const SnackBar(
+            content: Text("Registro salvo com sucesso."),
+          ),
         );
       } else if (value == DisposeStatus.error) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Houve uma falha ao registar.")),
+          const SnackBar(
+            content: Text("Houve uma falha ao registar."),
+          ),
         );
-      }
-    });
-  }
-
-  deleteJournal(BuildContext context) {
-    showConfirmationDialog(
-      context,
-      content:
-          "Deseja realmente remover o registro de ${WeekDay(journal!.createdAt)}?",
-      affirmativeOption: "Remover",
-    ).then((value) {
-      if (value != null && value) {
-        JournalService service = JournalService();
-        if (journal != null) {
-          service
-              .remove(journal!.id)
-              .then((value) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      (value)
-                          ? "Removido com sucesso!"
-                          : "Houve um erro ao remover",
-                    ),
-                  ),
-                );
-              })
-              .then((value) {
-                refreshFunction();
-              });
-        }
       }
     });
   }
