@@ -5,8 +5,7 @@ class WeekDay {
   late String long;
 
   WeekDay(this.date) {
-    int weekday = date.weekday;
-    switch (weekday) {
+    switch (date.weekday) {
       case 7:
         short = "dom";
         long = "Domingo";
@@ -40,6 +39,6 @@ class WeekDay {
 
   @override
   String toString() {
-    return "${long.toLowerCase()}, ${date.day} | ${date.month} | ${date.year}";
+    return "${long.toLowerCase()}, ${date.day} do ${date.month} de ${date.year}";
   }
 }
