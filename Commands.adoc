@@ -1,0 +1,8 @@
+==== Comandos - json-server-auth
+
+Comandos para instalar e executar json-server-auth localmente, que não contem bugs:
+
+. Dentro da pasta /server executar no terminal:
+* `npm install --save-dev json-server@0.17.3 json-server-auth@2.1.0 express@^4.17.0``
+. Após instalar executar o comando:
+* `npx json-server-auth --watch --host <SEU IP> db.json`
