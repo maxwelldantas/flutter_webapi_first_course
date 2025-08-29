@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http/http.dart';
 
@@ -7,15 +8,19 @@ import '../models/journal.dart';
 import 'http_interceptors.dart';
 
 class JournalService {
-  static const String url = "http://172.22.144.1:3000/";
+  static const String _defaultIp = '172.22.144.1';
+  final String baseUrl;
   static const String resource = "journals/";
+
+  JournalService()
+    : baseUrl = "http://${dotenv.get('IP_LOCAL', fallback: _defaultIp)}:3000/";
 
   http.Client client = InterceptedClient.build(
     interceptors: [LoggingInterceptor()],
   );
 
   String getURL() {
-    return "$url$resource";
+    return "${JournalService().baseUrl}$resource";
   }
 
   Uri getUri() {

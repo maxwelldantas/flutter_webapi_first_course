@@ -46,3 +46,6 @@ app.*.map.json
 
 # JSON Server
 /server/
+
+# Arquivo de variáveis de ambiente
+*.env
