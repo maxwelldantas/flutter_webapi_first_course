@@ -1,26 +1,18 @@
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_webapi_first_course/services/web_client.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_interceptor/http/http.dart';
 
 import '../models/journal.dart';
-import 'http_interceptors.dart';
 
 class JournalService {
-  static const String _defaultIp = '172.22.144.1';
-  final String baseUrl;
+  String url = WebClient.url;
+  http.Client client = WebClient().client;
+
   static const String resource = "journals/";
 
-  JournalService()
-    : baseUrl = "http://${dotenv.get('IP_LOCAL', fallback: _defaultIp)}:3000/";
-
-  http.Client client = InterceptedClient.build(
-    interceptors: [LoggingInterceptor()],
-  );
-
   String getURL() {
-    return "${JournalService().baseUrl}$resource";
+    return "$url$resource";
   }
 
   Uri getUri() {
